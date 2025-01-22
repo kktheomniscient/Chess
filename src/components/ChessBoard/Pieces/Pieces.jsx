@@ -1,49 +1,52 @@
 import './Pieces.css'
 import Piece from './Piece'
+import { useState } from 'react'
+import { createPosition, copyPosition} from '../../../helper'
+import { useRef } from 'react'
 
 const Pieces = () => {
-    const position = new Array(8).fill('').map(x=>new Array(8).fill(''))
 
-    // White pieces
-    position[0][0] = 'wr';  // White Rook
-    position[0][1] = 'wn';  // White Knight
-    position[0][2] = 'wb';  // White Bishop
-    position[0][3] = 'wq';  // White Queen
-    position[0][4] = 'wk';  // White King
-    position[0][5] = 'wb';  // White Bishop
-    position[0][6] = 'wn';  // White Knight
-    position[0][7] = 'wr';  // White Rook
-    for (let i = 0; i < 8; i++) {
-        position[1][i] = 'wp';  // White Pawns
+    const ref = useRef()
+
+    const calcCords = (e) => {
+        const {width,top,left} = ref.current.getBoundingClientRect()
+        const size = width/8
+        const y = Math.floor((e.clientX - left) / size) 
+        const x = 7 - Math.floor((e.clientY - top) / size)
+        return {x,y}
     }
 
-    // Black pieces
-    position[7][0] = 'br';  // Black Rook
-    position[7][1] = 'bn';  // Black Knight
-    position[7][2] = 'bb';  // Black Bishop
-    position[7][3] = 'bq';  // Black Queen
-    position[7][4] = 'bk';  // Black King
-    position[7][5] = 'bb';  // Black Bishop
-    position[7][6] = 'bn';  // Black Knight
-    position[7][7] = 'br';  // Black Rook
-    for (let i = 0; i < 8; i++) {
-        position[6][i] = 'bp';  // Black Pawns
-    }
-    
-    console.log(position);
+    const [state, setState] = useState(createPosition())
 
-    return <div className='pieces'>
-        {position.map((r,rank) =>
-            r.map((f,file) => 
-                position[rank][file]
-                ?   <Piece
-                    key = {rank+'-'+file}
-                    rank={rank}
-                    file={file}
-                    piece={position[rank][file]}
+    const onDrop = e => {
+        e.preventDefault()
+        const newPosition = copyPosition(state)
+        const {x,y} = calcCords(e)
+
+        const [p, rank, file] = e.dataTransfer.getData('text').split(',')
+
+        newPosition[rank][file] = ''
+        newPosition[x][y] = p
+
+        setState(newPosition)
+    }
+
+    const onDragOver = e => {
+        e.preventDefault()
+    }
+
+    return <div className='pieces' onDrop={onDrop} onDragOver={onDragOver} ref={ref}>
+        {state.map((r, rank) =>
+            r.map((f, file) =>
+                state[rank][file]
+                    ? <Piece
+                        key={rank + '-' + file}
+                        rank={rank}
+                        file={file}
+                        piece={state[rank][file]}
                     ></Piece>
-                : null
-        ))}
+                    : null
+            ))}
     </div>
 }
 
