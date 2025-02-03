@@ -3,6 +3,7 @@
     --light-tile: #f0d8b7;
     --dark-tile: #B48762;
     --bg-color: #202020;
+    --highlight: rgba(0,0,0,.1);
 }
 
 @media all and (max-width:450px){

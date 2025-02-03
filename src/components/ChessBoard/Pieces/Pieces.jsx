@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { createPosition, copyPosition} from '../../../helper'
 import { useRef } from 'react'
 import { useAppContext } from '../../../contexts/context'
-import { makeNewMove } from '../../../reducer/actions/move'
+import { clearCandidatesMoves, makeNewMove } from '../../../reducer/actions/move'
 
 const Pieces = () => {
 
@@ -29,11 +29,13 @@ const Pieces = () => {
 
         const [p, rank, file] = e.dataTransfer.getData('text').split(',')
 
-        newPosition[rank][file] = ''
-        newPosition[x][y] = p
+        if (appState.candidateMoves?.find(m => m[0] === x && m[1] === y)){
+            newPosition[rank][file] = ''
+            newPosition[x][y] = p
+            dispatch(makeNewMove({newPosition}))
+        }
 
-        
-        dispatch(makeNewMove({newPosition}))
+        dispatch(clearCandidatesMoves())
     }
 
     const onDragOver = e => {

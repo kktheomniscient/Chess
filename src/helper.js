@@ -12,9 +12,9 @@ export const createPosition = () => {
     position[0][5] = 'wb';  // White Bishop
     position[0][6] = 'wn';  // White Knight
     position[0][7] = 'wr';  // White Rook
-    for (let i = 0; i < 8; i++) {
-        position[1][i] = 'wp';  // White Pawns
-    }
+    // for (let i = 0; i < 8; i++) {
+    //     position[1][i] = 'wp';  // White Pawns
+    // }
 
     // Black pieces
     position[7][0] = 'br';  // Black Rook
@@ -25,9 +25,9 @@ export const createPosition = () => {
     position[7][5] = 'bb';  // Black Bishop
     position[7][6] = 'bn';  // Black Knight
     position[7][7] = 'br';  // Black Rook
-    for (let i = 0; i < 8; i++) {
-        position[6][i] = 'bp';  // Black Pawns
-    }
+    // for (let i = 0; i < 8; i++) {
+    //     position[6][i] = 'bp';  // Black Pawns
+    // }
     
     return position
 }
