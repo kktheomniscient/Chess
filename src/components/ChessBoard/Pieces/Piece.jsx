@@ -8,20 +8,19 @@ const Piece = ({
     piece
 }) => {
 
-    const {appState,dispatch} = useAppContext()
-    const {turn, position} = appState
-    const currentPosition = position[position.length-1]
+    const { appState, dispatch } = useAppContext()
+    const { turn, position } = appState
 
     const onDragStart = e => {
         e.dataTransfer.effectAllowed = 'move'
-        e.dataTransfer.setData('text/plain',`${piece},${rank},${file}`)
+        e.dataTransfer.setData('text/plain', `${piece},${rank},${file}`)
         setTimeout(() => {
             e.target.style.display = 'none'
-        },0)
-        if(turn == piece[0]){
-            const candidateMoves = arbiter.getRegularMoves({position:currentPosition,piece,rank,file})
+        }, 0)
+        if (turn == piece[0]) {
+            const candidateMoves = arbiter.getValidMoves({ position: position[position.length - 1],prevPosition: position[position.length - 2], piece, rank, file })
             console.log(candidateMoves);
-            dispatch(generateCandidateMoves({candidateMoves}))
+            dispatch(generateCandidateMoves({ candidateMoves }))
         }
     }
 
@@ -29,12 +28,12 @@ const Piece = ({
         e.target.style.display = "block"
     }
 
-    return <div 
+    return <div
         className={`piece ${piece} p-${file}${rank}`}
         draggable={true}
         onDragEnd={onDragEnd}
         onDragStart={onDragStart}
-        >
+    >
     </div>
 }
 
