@@ -1,6 +1,6 @@
-import arbiter from "../../../arbiter/arbiter"
-import { useAppContext } from "../../../contexts/context"
-import { generateCandidateMoves } from "../../../reducer/actions/move"
+import arbiter from "../../arbiter/arbiter"
+import { useAppContext } from "../../contexts/context"
+import { generateCandidateMoves } from "../../reducer/actions/move"
 
 const Piece = ({
     rank,

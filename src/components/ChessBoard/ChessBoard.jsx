@@ -1,10 +1,10 @@
 import { getCharacter } from '../../helper';
 import './ChessBoard.css';
-import Ranks from './bits/Ranks'
-import Files from './bits/Files'
-import Pieces from './Pieces/Pieces';
+import Ranks from '../bits/Ranks'
+import Files from '../bits/Files';
+import Pieces from '../Pieces/Pieces';
 import { useAppContext } from '../../contexts/context';
-
+import Popup from '../Popups/Popup'
 
 const ChessBoard = () => {
 
@@ -44,6 +44,8 @@ const ChessBoard = () => {
             </div>
 
             <Pieces></Pieces>
+
+            <Popup></Popup>
 
             <Files files={files}></Files>
 
